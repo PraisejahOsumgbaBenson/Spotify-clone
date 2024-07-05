@@ -6,6 +6,19 @@ export default function Login(){
       const clientId = "320d864a976a459d82cac46e6145b4ca";
       const redirectUrl = "http://localhost:3000/";
       const apiUrl = "https://accounts.spotify.com/authorize";
+      const scope = [
+        "user-read-email",
+        "user-read-private",
+        "user-modify-playback-state",
+        "user-read-playback-state",
+        "user-read-currently-playing",
+        "user-read-playback-position",
+        "user-read-recently-played",
+        "user-top-read",
+      ];
+    window.location.href = `${apiUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${scope.join(
+        " "
+    )}&response_type=token&show_daialog=true`;
     };
     return (
     <Container>
