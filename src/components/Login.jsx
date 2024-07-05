@@ -34,7 +34,6 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 height:100vh;
-width:100vh;
 background-color:#1db954;
 gap:5rem;
 img {
