@@ -5,12 +5,13 @@ import { CgProfile } from "react-icons/cg";
 import { useStateProvider } from "../utils/StateProvider";
 
 // Navbar component for the Spotify application
-export default function Navbar() {
+// Added navBackground prop to allow dynamic background color change
+export default function Navbar({ navBackground }) {
   // Extract userInfo from the global state
   const [{ userInfo }] = useStateProvider();
 
   return (
-    <Container>
+    <Container navBackground={navBackground}>
       {/* Search bar section */}
       <div className="search__bar">
         <FaSearch />
@@ -39,7 +40,9 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   transition: 0.3s ease-in-out;
-  background-color: none;
+  // Apply dynamic background color based on the navBackground prop
+  background-color: ${({ navBackground }) =>
+    navBackground ? "rgba(0,0,0,0.7)" : "none"};
 
   // Styling for the search bar
   .search__bar {

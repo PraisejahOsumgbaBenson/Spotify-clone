@@ -72,8 +72,17 @@ const Container = styled.div`
     height: 52vh; // Setting max height for list
     max-height: 100%; // Ensuring list doesn't overflow container
     overflow: auto; // Adding scroll when content overflows
-    scrollbar-width: thin; // Customizing scrollbar width
-    scrollbar-color: rgba(255, 255, 255, 0.6); // Customizing scrollbar color
+    &::-webkit-scrollbar {
+      width: 0.7rem; // Customizing scrollbar width
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(
+        255,
+        255,
+        255,
+        0.6
+      ); // Customizing scrollbar thumb color
+    }
 
     li {
       display: flex;
