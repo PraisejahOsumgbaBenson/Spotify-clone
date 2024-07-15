@@ -8,7 +8,8 @@ import { AiFillClockCircle } from "react-icons/ai";
 // Body component fetches the selected playlist details from Spotify API
 // and renders the playlist information including image, name, description,
 // and a list of tracks with their details.
-export default function Body() {
+export default function Body({ headerBackground }) {
+  // Added headerBackground prop
   const [{ token, selectedPlayListId, selectedPlayList }, dispatch] =
     useStateProvider();
 
@@ -53,9 +54,16 @@ export default function Body() {
     getInitialPlayList();
   }, [token, dispatch, selectedPlayListId]);
 
+  // Function to convert milliseconds to minutes and seconds
+  const msToMinutesAndSeconds = (ms) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
   // Render the playlist details if available
   return (
-    <Container>
+    <Container headerBackground={headerBackground}>
       {selectedPlayList && (
         <>
           <div className="playList">
@@ -118,7 +126,8 @@ export default function Body() {
                         <span>{album}</span>
                       </div>
                       <div className="col">
-                        <span>{duration}</span>
+                        <span>{msToMinutesAndSeconds(duration)}</span>{" "}
+                        {/* Formatting track duration */}
                       </div>
                     </div>
                   );
@@ -166,6 +175,8 @@ const Container = styled.div`
       top: 15vh;
       padding: 1rem 3rem;
       transition: 0.3s ease-in-out;
+      background-color: ${({ headerBackground }) =>
+        headerBackground ? "#000000dc" : "none"}; // Dynamic header background
     }
     .tracks {
       margin: 0 2rem;
@@ -175,7 +186,7 @@ const Container = styled.div`
       .row {
         padding: 0.5rem 1rem;
         display: grid;
-        grid-template-columns: 0.3fr 3.1fr 2fr 0.1fr;
+        grid-template-columns: 0.3fr 3.1fr 1.9fr 0.1fr;
         &:hover {
           background-color: rgba(0, 0, 0, 0.7);
         }
