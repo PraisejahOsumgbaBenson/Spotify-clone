@@ -6,7 +6,9 @@ export const initialSate = {
   playlists: [], // Array to store playlists
   userInfo: null, // Object to store user information
   selectedPlayListId: "6VoB9eBTXefcST5sV6KtdH", // Default selected playlist ID
-  selectedPlayList: null, // Object to store selected playlist details
+  selectedPlayList: null,
+  currentlyPlaying: null, // Object to store selected playlist details
+  playerState: false,
 };
 
 // Reducer function to handle state transitions based on action types
@@ -38,6 +40,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedPlayList: action.selectedPlayList,
+      };
+    }
+    case reducerCases.SET_PLAYING: {
+      return {
+        ...state,
+        currentlyPlaying: action.currentlyPlaying,
+      };
+    }
+    case reducerCases.SET_PLAYER_STATE: {
+      return {
+        ...state,
+        playerState: action.playerState,
       };
     }
     // Default case returns the current state if no matching action type is found
