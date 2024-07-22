@@ -79,7 +79,7 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     background: linear-gradient(transparent, rgba(0, 0, 0, 1));
-    background-color: rgb(32, 87, 100);
+    background-color: rgb(72, 47, 55);
   }
   .body {
     height: 100%;
