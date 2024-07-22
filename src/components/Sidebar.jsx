@@ -51,7 +51,7 @@ const Container = styled.div`
       margin: 1rem 0;
 
       img {
-        max-inline-size: 80%; // Adjusting logo size
+        max-inline-size: 50%; // Adjusting logo size
         block-sixe: auto; // Ensuring logo scales appropriately
       }
     }
