@@ -9,7 +9,7 @@ import { AiFillClockCircle } from "react-icons/ai";
 // and renders the playlist information including image, name, description,
 // and a list of tracks with their details.
 export default function Body({ headerBackground }) {
-  // Added headerBackground prop
+  // Use the state provider to access global state and dispatch actions
   const [{ token, selectedPlayListId, selectedPlayList }, dispatch] =
     useStateProvider();
 
@@ -31,7 +31,7 @@ export default function Body({ headerBackground }) {
         id: response.data.id,
         name: response.data.name,
         description: response.data.description.startsWith("<a")
-          ? ""
+          ? "" // Handle cases where description might be HTML
           : response.data.description,
         image: response.data.images[0].url,
         tracks: response.data.tracks.items.map(({ track }) => ({
@@ -59,6 +59,57 @@ export default function Body({ headerBackground }) {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  };
+
+  // Function to play a track on Spotify
+  const playTrack = async (
+    id,
+    name,
+    artists,
+    image,
+    context_uri,
+    track_number
+  ) => {
+    try {
+      // Send request to start playback of a track
+      const response = await axios.put(
+        "https://api.spotify.com/v1/me/player/play",
+        {
+          context_uri,
+          offset: {
+            position: track_number - 1,
+          },
+          position_ms: 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 204) {
+        // Dispatch actions to update the currently playing track and player state
+        const currentlyPlaying = {
+          id,
+          name,
+          artists,
+          image,
+        };
+        dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
+        dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
+      } else {
+        console.log("Playback did not start. Status code:", response.status);
+        dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: false });
+      }
+    } catch (error) {
+      // Handle any errors that occur during playback
+      console.error(
+        "Error playing track:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   // Render the playlist details if available
@@ -109,7 +160,20 @@ export default function Body({ headerBackground }) {
                   index
                 ) => {
                   return (
-                    <div className="row" key={id}>
+                    <div
+                      className="row"
+                      key={id}
+                      onClick={() =>
+                        playTrack(
+                          id,
+                          name,
+                          artists,
+                          image,
+                          context_uri,
+                          track_number
+                        )
+                      }
+                    >
                       <div className="col">
                         <span>{index + 1}</span>
                       </div>
