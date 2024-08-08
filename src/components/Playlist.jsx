@@ -10,7 +10,7 @@ export default function Playlists() {
   const [loading, setLoading] = useState(true); // State to manage loading state
 
   useEffect(() => {
-    // Effect to fetch playlists data
+    // Effect to fetch playlists data when the component mounts or token changes
     const getPlayListData = async () => {
       try {
         const response = await axios.get(
@@ -46,12 +46,19 @@ export default function Playlists() {
     return <div>No playlists available</div>; // Displaying message if no playlists are available
   }
 
+  // Function to handle playlist selection and dispatch the selected playlist ID
+  const changeCurrentPlayList = (selectedPlayListId) => {
+    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlayListId });
+  };
+
   // Render playlists in a styled container
   return (
     <Container>
       <ul>
         {playlists.map(({ name, id }) => (
-          <li key={id}>{name}</li> // Mapping through playlists to display name
+          <li key={id} onClick={() => changeCurrentPlayList(id)}>
+            {name}
+          </li>
         ))}
       </ul>
     </Container>
@@ -64,16 +71,16 @@ const Container = styled.div`
   overflow: hidden;
 
   ul {
-    list-style-type: none; // Removing default list styles
+    list-style-type: none; 
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    height: 52vh; // Setting max height for list
-    max-height: 100%; // Ensuring list doesn't overflow container
-    overflow: auto; // Adding scroll when content overflows
+    height: 52vh; 
+    max-height: 100%; 
+    overflow: auto; 
     &::-webkit-scrollbar {
-      width: 0.7rem; // Customizing scrollbar width
+      width: 0.7rem; 
     }
     &::-webkit-scrollbar-thumb {
       background-color: rgba(
@@ -86,13 +93,13 @@ const Container = styled.div`
 
     li {
       display: flex;
-      gap: 1rem; // Gap between list items
-      cursor: pointer; // Changing cursor to pointer on hover
-      transition: 0.3s ease-in-out; // Adding smooth transition effect
+      gap: 1rem; 
+      cursor: pointer; 
+      transition: 0.3s ease-in-out; 
 
       &:hover {
-        color: white; // Changing text color on hover
-      }
+        color: white;
+       }
     }
   }
 `;
