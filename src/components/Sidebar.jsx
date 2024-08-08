@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import spotifyLogo from "../assets/Spotify-logo-white.png";
-import { IoLibrary } from "react-icons/io5";
-import { MdHomeFilled, MdSearch } from "react-icons/md";
+import spotifyLogo from "../assets/Spotify-logo-white.png"; // Importing Spotify logo
+import { IoLibrary } from "react-icons/io5"; // Importing library icon
+import { MdHomeFilled, MdSearch } from "react-icons/md"; // Importing home and search icons
 import Playlists from "./Playlist"; // Importing Playlists component
 
 // Sidebar component displaying Spotify logo, navigation links, and playlists
@@ -10,10 +10,12 @@ export default function Sidebar() {
   return (
     <Container>
       <div className="top__links">
+        {/* Sidebar logo */}
         <div className="logo">
           <img src={spotifyLogo} alt="Spotify Logo" />
         </div>
         <ul>
+          {/* Navigation links */}
           <li>
             <MdHomeFilled />
             <span>Home</span>
@@ -51,8 +53,8 @@ const Container = styled.div`
       margin: 1rem 0;
 
       img {
-        max-inline-size: 50%; // Adjusting logo size
-        block-sixe: auto; // Ensuring logo scales appropriately
+        max-inline-size: 40%; // Adjusting logo size
+        block-size: auto; // Ensuring logo scales appropriately
       }
     }
 
