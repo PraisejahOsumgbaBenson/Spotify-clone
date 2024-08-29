@@ -1,11 +1,11 @@
 import { reducerCases } from "./Constant";
 
 // Initial state with properties for token, playlists, userInfo, selectedPlayListId, and selectedPlayList
-export const initialSate = {
+export const initialState = {
   token: null,
   playlists: [], // Array to store playlists
   userInfo: null, // Object to store user information
-  selectedPlayListId: "6VoB9eBTXefcST5sV6KtdH", // Default selected playlist ID
+  selectedPlayListId: process.env.REACT_APP_SELECTED_PLAYLIST_ID, // Default selected playlist ID
   selectedPlayList: null,
   currentlyPlaying: null, // Object to store selected playlist details
   playerState: false,

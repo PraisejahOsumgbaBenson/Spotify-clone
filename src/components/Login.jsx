@@ -6,7 +6,7 @@ import spotifyLogo from "../assets/Spotify-logo.png";
 export default function Login() {
   const handleClick = () => {
     // Define necessary parameters for Spotify authorization
-    const clientId = "6c7fe756a409492e8799d5273330f2f1";
+    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
     const redirectUrl = "http://localhost:3000/";
     const apiUrl = "https://accounts.spotify.com/authorize";
     const scope = [
